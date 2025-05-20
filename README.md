@@ -40,7 +40,7 @@ node ./build/mcp.js
             "command": "npx",
             "args": [
                 "-y",
-                "@modelcontextprotocol/technical-solution"
+                "technical-solution"
             ]
         }
     }

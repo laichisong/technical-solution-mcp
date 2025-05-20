@@ -1,5 +1,5 @@
 {
-  "name": "@modelcontextprotocol/technical-solution",
+  "name": "technical-solution",
   "version": "1.0.0",
   "description": "MCP server for technical solution document writting",
   "main": "index.js",
