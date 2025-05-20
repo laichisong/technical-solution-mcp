@@ -64,6 +64,11 @@ src/
 └── index.ts           # 入口文件
 ```
 
+## 打赏
+<a href="https://afdian.com/item/5cc05126358f11f08b685254001e7c00">
+  <img src="https://i.ibb.co/R4JvCq1n/image.jpg" width="500px">
+</a>
+
 ## 许可证
 
 ISC License
