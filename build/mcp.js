@@ -272,45 +272,6 @@ class TechnicalSolutionServer {
         return outputLines.join("\n");
     }
     /**
-     * 获取当前上下文中内容为空或过于简略的章节的路径、标题和原因。
-     * @returns Array of IncompleteSectionInfo.
-     */
-    getIncompleteSections() {
-        const incomplete = [];
-        const _recursiveCheck = (node, currentPathKeyParts) => {
-            if (!node || typeof node.get !== 'function')
-                return;
-            const title = node.get("title", "未命名章节");
-            const content = node.get("content", "");
-            // Path to the content field itself
-            const contentPathStr = [...currentPathKeyParts, "content"].join(this.pathSeparator);
-            if (!content || content.trim() === "") {
-                incomplete.push({
-                    path: contentPathStr,
-                    title: title,
-                    reason: "内容为空"
-                });
-            }
-            else if (content.trim().length < 20) { // Example: content less than 20 chars is "too brief"
-                incomplete.push({
-                    path: contentPathStr,
-                    title: title,
-                    reason: "内容可能过于简略"
-                });
-            }
-            const subsections = node.get("subsections");
-            if (subsections && subsections.size > 0) {
-                subsections.forEach((subNode, subKey) => {
-                    _recursiveCheck(subNode, [...currentPathKeyParts, "subsections", subKey]);
-                });
-            }
-        };
-        this.context.forEach((node, key) => {
-            _recursiveCheck(node, [key]);
-        });
-        return incomplete;
-    }
-    /**
      * 生成最终的文档 (Markdown格式).
      * @returns The Markdown string.
      */
@@ -370,6 +331,7 @@ const QUERY_TECHNICAL_SOLUTION_CONTEXT = {
     4. 参数解释:
    - **'sectionPath' (可选, 字符串类型):**
      *   描述：你想要查询的文档内部的具体路径。路径由章节的键名通过点（.）连接而成。
+     *   如果此参数未提供或为 'null'，则工具将返回整个文档的当前上下文。
      *   结构：
          *   要获取某个章节节点（包含其标题、内容和可能的子章节）的完整信息，路径通常指向该章节的键名，例如 '1_overview' 或 '1_overview.subsections.1_1_demand_background'。
          *   要直接获取某个章节的文本内容，路径应指向该章节下的 'content' 字段，例如 '1_overview.subsections.1_1_demand_background.content'。
@@ -379,7 +341,6 @@ const QUERY_TECHNICAL_SOLUTION_CONTEXT = {
          *   "1_overview": 获取整个“概述”章节（包括其所有子章节）。
          *   "2_demand_analysis.subsections.2_1_demand_scope": 获取“需求分析”下的“2.1 需求范围”这个子章节节点。
          *   "2_demand_analysis.subsections.2_1_demand_scope.content": 获取“2.1 需求范围”的具体文本内容。
-     *   如果此参数未提供或为 'null'，则工具将返回整个文档的当前上下文。
 
     **5. 你（LLM）应该怎么做：**
    1.  **明确查询目的：** 在调用此工具前，想清楚你希望通过查询上下文获得什么信息。是为了填充用户输入？是为了找问题问用户？还是为了检查某个特定细节？
@@ -407,7 +368,7 @@ const QUERY_TECHNICAL_SOLUTION_CONTEXT = {
                 "description": "要查询的文档内部的具体路径，例如 '1_overview.subsections.1_1_demand_background.content'。如果省略，则查询整个文档上下文。"
             },
         },
-        "required": [] // 由于两个参数都是可选的，所以 required 数组为空
+        "required": []
     }
 };
 const UPDATE_TECHNICAL_SOLUTION_CONTEXT = {

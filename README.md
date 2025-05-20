@@ -19,21 +19,32 @@
    - 需求分析（需求范围、业务用例等）
    - 系统分析与设计（系统依赖、关键功能设计等）
 
-## Installation 
+## Quick Start 
 
-1. 安装依赖
+1. Installation
 ```bash
 npm install
 ```
 
-2. 构建项目
+2. CLI
 ```bash
 npm run build
+node ./build/mcp.js
 ```
 
-3. 运行服务器
+3. MCP sever configuration
 ```bash
-npm start
+{
+    "mcpServers": {
+        "technical-solution": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/technical-solution"
+            ]
+        }
+    }
+}
 ```
 
 ## 使用说明
