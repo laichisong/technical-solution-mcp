@@ -50,18 +50,18 @@ node ./build/mcp.js
 ## 使用说明
 
 ### 查询上下文
-使用 `queryTechnicalSolutionContext` 工具查询文档的特定章节或整体内容。
+使用 `queryTechnicalSolutionContext` 工具查询技术方案的特定章节或整体内容。
 
 ### 更新上下文
-使用 `updateTechnicalSolutionContext` 工具更新文档内容，支持覆盖和追加模式。
+使用 `updateTechnicalSolutionContext` 工具更新技术方案内容，支持覆盖和追加模式。
 
 ## 项目结构
 
 ```
 src/
 ├── mcp.ts              # 主服务器实现
-├── mcp-types.ts       # 类型定义
-└── index.ts           # 入口文件
+├── mcp-types.ts        # 类型定义
+└── mcp.test.ts         # 测试用例
 ```
 
 ## 打赏
